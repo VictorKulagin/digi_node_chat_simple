@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <title>Chat</title>
+  <style>
+    .list-group-item {
+      margin: 25px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .btn {
+      border-radius: 30px;
+      color: #000000;
+      background-color: #ffffff;
+      border-color: #ffffff;
+      font-weight: 900;
+      margin-top: -1%;
+      margin-left: 5%;
+    }
+    .btn:hover {
+      color: #000000;
+      background-color: #ffffff;
+    }
+  </style>
+ </head>
+ <body>
+ 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ 	</nav>	
+	 <div class="row">
+	 	<div class="messages chat col-md-12" style="background-color: #00a0fe">
+	 		<ul class="list-group text-muted">
+
+	 		</ul>
+ 
+		  <div class="form-group"> 
+		  	<label for="exampleTextarea">Сообщение:</label>
+		  	<textarea class="form-control m" id="exampleTextarea" rows="3" style="    background-color: #000;"></textarea>
+		  </div>
+		  <div class="form-group">
+		  	<button type="button" class="btn btn-success btn-lg btn-primary send"> > </button>
+		  </div>
+		</div>
+	 </div>	
+  	<script src="/socket.io/socket.io.js"></script>
+  	<script type="text/javascript">
+  		var socket = io('http://localhost:3000/');
+
+  		document.querySelector('.send').addEventListener('click', ev => {
+  				ev.preventDefault();
+  				let text = document.querySelector('.m').value;
+  				socket.emit('message', text);
+  			})
+
+  		socket.on('new message', function(data) {
+  			let li = document.createElement('li');
+  			li.textContent = data;
+  			li.classList.add('list-group-item');
+
+  			document.querySelector('.list-group').appendChild(li);
+  		})
+  	</script>
+
+  	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+ </body>
+</html>
